@@ -10,5 +10,14 @@
         android:name="com.example.sbtechincaltest.login.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login"
-        />
+        >
+        <action
+            android:id="@+id/action_loginFragment_to_photosFragment"
+            app:destination="@id/photosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photosFragment"
+        android:name="com.example.sbtechincaltest.photos.PhotosFragment"
+        android:label="fragment_photos"
+        tools:layout="@layout/fragment_photos" />
 </navigation>

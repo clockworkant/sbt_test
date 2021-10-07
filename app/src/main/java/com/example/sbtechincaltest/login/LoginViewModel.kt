@@ -26,6 +26,7 @@ class LoginViewModel: ViewModel() {
 
     private fun doLogin() {
         _loginViewState.value = LoginViewState(loginSuccessful = true)
+        _loginViewState.value = LoginViewState() //clear after reporting login successful
     }
 
     private fun getPasswordError(): String? =
