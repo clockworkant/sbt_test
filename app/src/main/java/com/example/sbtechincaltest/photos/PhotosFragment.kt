@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
@@ -16,7 +17,6 @@ import com.example.sbtechincaltest.databinding.ItemPhotoBinding
 import com.example.sbtechincaltest.photos.data.PhotoData
 import com.squareup.picasso.Picasso
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
 
 class PhotosFragment : Fragment() {
 
@@ -40,12 +40,27 @@ class PhotosFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initToolbar()
         initRecyclerView()
+        initSwipeToRefresh()
 
-        viewmodel.photos.observe(viewLifecycleOwner, {
-            photoAdapter.submitList(it)
+        viewmodel.photosModel.observe(viewLifecycleOwner, {
+            processModel(it)
         })
 
         viewmodel.loadPhotos()
+    }
+
+    private fun initSwipeToRefresh() {
+        binding.photosListRefreshlayout.setOnRefreshListener { viewmodel.loadPhotos() }
+    }
+
+    private fun processModel(photosModel: PhotosModel) {
+        showProgress(photosModel.showLoading)
+        photosModel.photos?.let { photoAdapter.submitList(it) }
+        photosModel.errorMessage?.let { Toast.makeText(context, it, Toast.LENGTH_SHORT).show() }
+    }
+
+    private fun showProgress(showLoading: Boolean) {
+        binding.photosListRefreshlayout.isRefreshing = showLoading
     }
 
     private fun initRecyclerView() {
@@ -79,7 +94,7 @@ private class PhotoAdapter :
             Picasso.get()
                 .load(photo.thumbnailUrl)
                 .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_baseline_arrow_back_ios_24)
+                .error(android.R.drawable.stat_notify_error)
                 .into(binding.photoImage);
             binding.photoTitle.text = photo.title
         }
@@ -102,7 +117,7 @@ object PhotoDiffCallback : DiffUtil.ItemCallback<PhotoData>() {
     }
 
     override fun areContentsTheSame(oldItem: PhotoData, newItem: PhotoData): Boolean {
-        return oldItem.title == newItem.title //TODO improve
+        return (oldItem.title == newItem.title) && (oldItem.thumbnailUrl == newItem.thumbnailUrl)
     }
 }
 
