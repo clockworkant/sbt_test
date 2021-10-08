@@ -44,11 +44,11 @@ class PhotosFragment : Fragment() {
             processModel(it)
         })
 
-        viewmodel.loadPhotos()
+        viewmodel.refreshPhotos()
     }
 
     private fun initSwipeToRefresh() {
-        binding.photosListRefreshlayout.setOnRefreshListener { viewmodel.loadPhotos() }
+        binding.photosListRefreshlayout.setOnRefreshListener { viewmodel.refreshPhotos() }
     }
 
     private fun processModel(photosModel: PhotosModel) {
@@ -86,6 +86,11 @@ class PhotosFragment : Fragment() {
             activity?.onBackPressed()
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
 
 private class PhotoAdapter :
@@ -101,6 +106,7 @@ private class PhotoAdapter :
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(android.R.drawable.stat_notify_error)
                 .into(binding.photoImage)
+
             binding.photoTitle.text = photo.title
         }
     }

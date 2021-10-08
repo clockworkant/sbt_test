@@ -20,7 +20,7 @@ class PhotosViewModel(
 
     private val disposable = CompositeDisposable()
 
-    fun loadPhotos() {
+    fun refreshPhotos() {
         _photosModel.value = PhotosModel(showLoading = true)
         disposable.add(
             photoRepo.getAll()

@@ -10,11 +10,11 @@ class LoginViewModel: ViewModel() {
     val loginViewState = _loginViewState as LiveData<LoginViewState>
 
     var username: String? = null
-    var passwword: String? = null
+    var password: String? = null
 
     fun login(){
 
-        if(username.isNullOrEmpty() || passwword.isNullOrEmpty()){
+        if(username.isNullOrEmpty() || password.isNullOrEmpty()){
             _loginViewState.value = LoginViewState(
                 usernameError = getUsernameError(),
                 passwordError = getPasswordError(),
@@ -26,16 +26,15 @@ class LoginViewModel: ViewModel() {
 
     private fun doLogin() {
         _loginViewState.value = LoginViewState(loginSuccessful = true)
-        _loginViewState.value = LoginViewState() //clear after reporting login successful
+        _loginViewState.value = LoginViewState() //reset after reporting login successful
     }
 
     private fun getPasswordError(): String? =
-        if(passwword.isNullOrEmpty()) "Password must not be blank." else null
+        if(password.isNullOrEmpty()) "Password must not be blank." else null
 
 
     private fun getUsernameError(): String? =
         if(username.isNullOrEmpty()) "Username must not be blank." else null
-
 
 }
 
