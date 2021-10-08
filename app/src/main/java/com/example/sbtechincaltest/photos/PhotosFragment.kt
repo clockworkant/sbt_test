@@ -7,15 +7,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import com.example.sbtechincaltest.R
 import com.example.sbtechincaltest.databinding.FragmentPhotosBinding
 import com.example.sbtechincaltest.databinding.ItemPhotoBinding
 import com.example.sbtechincaltest.photos.data.PhotoData
 import com.squareup.picasso.Picasso
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PhotosFragment : Fragment() {
@@ -69,6 +67,12 @@ class PhotosFragment : Fragment() {
             setHasFixedSize(false)
             layoutManager = linearLayoutManager
             adapter = photoAdapter
+            addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    linearLayoutManager.orientation
+                )
+            )
         }
     }
 
@@ -93,9 +97,10 @@ private class PhotoAdapter :
         fun bind(photo: PhotoData) {
             Picasso.get()
                 .load(photo.thumbnailUrl)
+                .transform(RoundedCornersTransformation(10, 0))
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(android.R.drawable.stat_notify_error)
-                .into(binding.photoImage);
+                .into(binding.photoImage)
             binding.photoTitle.text = photo.title
         }
     }

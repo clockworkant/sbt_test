@@ -3,7 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/fragment_horizontal_margin"
+    android:layout_marginStart="@dimen/fragment_horizontal_margin"
+    android:background="@drawable/item_photos_bg"
+    >
 
     <TextView
         android:id="@+id/photo_title"
@@ -12,12 +16,16 @@
         app:layout_constraintBottom_toBottomOf="@+id/photo_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/photo_image"
-        app:layout_constraintTop_toTopOf="@+id/photo_image" />
+        app:layout_constraintTop_toTopOf="@+id/photo_image"
+        android:textAppearance="?textAppearanceBody1"
+        tools:text="This is some dummy text"
+        android:layout_margin="16dp"
+        />
 
     <ImageView
         android:id="@+id/photo_image"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
