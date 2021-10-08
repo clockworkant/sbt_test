@@ -1,13 +1,13 @@
 package com.example.sbtechincaltest.login
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.hadilq.liveevent.LiveEvent
 
 class LoginViewModel: ViewModel() {
 
-    private val _loginViewState = MutableLiveData<LoginViewState>()
-    val loginViewState = _loginViewState as LiveData<LoginViewState>
+    private var _loginViewState = LiveEvent<LoginModel>()
+    val loginViewState = _loginViewState as LiveData<LoginModel>
 
     var username: String? = null
     var password: String? = null
@@ -15,7 +15,7 @@ class LoginViewModel: ViewModel() {
     fun login(){
 
         if(username.isNullOrEmpty() || password.isNullOrEmpty()){
-            _loginViewState.value = LoginViewState(
+            _loginViewState.value = LoginModel(
                 usernameError = getUsernameError(),
                 passwordError = getPasswordError(),
             )
@@ -25,8 +25,14 @@ class LoginViewModel: ViewModel() {
     }
 
     private fun doLogin() {
-        _loginViewState.value = LoginViewState(loginSuccessful = true)
-        _loginViewState.value = LoginViewState() //reset after reporting login successful
+        _loginViewState.value = LoginModel(loginSuccessful = true)
+        resetLoginForm()
+
+    }
+
+    private fun resetLoginForm() {
+        username = null
+        password = null
     }
 
     private fun getPasswordError(): String? =
@@ -38,7 +44,7 @@ class LoginViewModel: ViewModel() {
 
 }
 
-data class LoginViewState(
+data class LoginModel(
     val usernameError: String? = null,
     val passwordError: String? = null,
     val loginSuccessful: Boolean? = null
