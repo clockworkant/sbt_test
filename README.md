@@ -1,4 +1,4 @@
-#An Android Interview test project
+# An Android Interview test project
 
 ## Overview
 - Built with: 
@@ -11,7 +11,7 @@
     - android view binding
 - Architecture is MVVM with repo's and data source
 
-#Original Spec
+# Original Spec
 ## Designs
 
 ![Login](Login.png) ![Photos](Photos.png)
