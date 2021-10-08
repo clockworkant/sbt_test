@@ -11,6 +11,9 @@
     - android view binding
 - Architecture is MVVM with repo's and data source
 
+## Demo
+![Demo](demo.gif)
+
 # Original Spec
 ## Designs
 
